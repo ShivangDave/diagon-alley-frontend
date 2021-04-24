@@ -37,6 +37,11 @@
   padding-top: 40px;
 }
 
+.item-card {
+  z-index: 0;
+  cursor: pointer;
+}
+
 .image-btn-left {
   position: absolute;
   top: 40%;
@@ -75,4 +80,32 @@
 
 .content {
   padding: 5px !important;
+  z-index: 1;
+}
+
+/* Item details page */
+
+.item-container {
+  width: 70%;
+
+  text-align: center;
+  display: flex !important;
+  justify-content: space-between;
+}
+
+.item-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.item-image.active {
+  height: 70%;
+  width: 70%;
+}
+
+.item-image {
+  height: 50px;
+  width: 50px;
 }

@@ -1,10 +1,12 @@
 import { useState } from 'react';
+import { withRouter } from 'react-router';
+
 import { Card, Image, Icon } from 'semantic-ui-react';
 
-const Item = ({item}) => {
+const Item = ({ item, history }) => {
 
   const { id } = item
-  const { name, description, item_images, price } = item.attributes
+  const { name, item_images, price } = item.attributes
 
   const [ imgCount, setImageCount ] = useState(0)
   const [ showBtn, setShowBtn ] = useState(false)
@@ -22,27 +24,26 @@ const Item = ({item}) => {
   return (
     <Card id={id} color='orange' className="item-card" raised centered
       onMouseEnter={() => setShowBtn(true)}
-        onMouseLeave={() => setShowBtn(false)}>
+        onMouseLeave={() => setShowBtn(false)}
+    >
       <Image
         src={item_images[imgCount].img_url}
-          wrapped ui={false} alt={''} />
+          wrapped ui={false} alt={''}
+            onClick={() => history.push(`/product/${id}`)} />
       {
         showBtn && (
-          <Icon
-            size={'big'} className={'image-btn-left'}
-              link onClick={() => changeImage(1)}
-                name="caret right" />
-        )
-      }
-      {
-        showBtn && (
-          <Icon size={'big'} className={'image-btn-right'}
-            link onClick={() => changeImage(-1)}
-              name="caret left" />
+          <>
+            <Icon size={'big'} className={'image-btn-left'}
+                link onClick={() => changeImage(1)}
+                  name="caret right" />
+            <Icon size={'big'} className={'image-btn-right'}
+                link onClick={() => changeImage(-1)}
+                  name="caret left" />
+          </>
         )
       }
 
-      <Card.Content>
+      <Card.Content onClick={() => history.push(`/product/${id}`)}>
         <div className={'image-counter'}>
           {
             item_images.map((img,index) => (
@@ -56,12 +57,9 @@ const Item = ({item}) => {
         <Card.Meta>
           <span className='date'>${ price }</span>
         </Card.Meta>
-        <Card.Description>
-          { description }
-        </Card.Description>
       </Card.Content>
     </Card>
   )
 }
 
-export default Item;
+export default withRouter(Item);

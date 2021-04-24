@@ -10,7 +10,7 @@ const Header = () => {
         <Menu.Item header>
           <Image
             src={'https://i.pinimg.com/originals/12/70/6b/12706b698669dfc5ebef671e6e65e69b.jpg'}
-              alt={''} />
+              alt={''} href={'/'}/>
         </Menu.Item>
       </Menu.Menu>
 
