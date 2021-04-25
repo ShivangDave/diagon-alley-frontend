@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Menu, Dropdown, Image } from 'semantic-ui-react'
+import { Menu, Dropdown, Image, Icon, Label } from 'semantic-ui-react'
 
 const Header = () => {
   const [activeItem, handleItemClick] = useState('')
@@ -42,6 +42,16 @@ const Header = () => {
         </Dropdown>
 
         <Menu.Menu position='right'>
+          <Menu.Item
+            name='Cart'
+            active={activeItem === 'cart'}
+            onClick={() => handleItemClick('cart')}
+          >
+            <Icon name={'cart'} />
+            <Label color='black' floating>
+              0
+            </Label>
+          </Menu.Item>
           <Menu.Item
             name='Alohomora'
             active={activeItem === 'Alohomora'}
