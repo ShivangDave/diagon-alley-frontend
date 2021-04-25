@@ -158,3 +158,13 @@
 .add-to-cart-btn {
   width: 200px;
 }
+
+.original-price-text {
+  color: red !important;
+  font-size: 20px !important;
+}
+
+.original-price-text p {
+  text-decoration: line-through;
+  color: black !important;
+}

@@ -31,7 +31,7 @@ const ItemPage = () => {
     setAdded(true)
 
     console.log(item)
-    
+
     setTimeout(() => {
       setLoading(false)
       setTimeout(() => {
@@ -91,9 +91,16 @@ const ItemPage = () => {
               { item.description }
             </p>
 
-            <Header as='h2'>
-              { `$${item.price}` }
-            </Header>
+            {
+              item.price && (
+                <Header as='h2' className="original-price-text">
+                  { `Current: $${item.price.toFixed(2)}` }
+                  <p>
+                    { `Original: $${item.original_price}` }
+                  </p>
+                </Header>
+              )
+            }
 
             <Button icon labelPosition='left'
               color='black' loading={isLoading}
