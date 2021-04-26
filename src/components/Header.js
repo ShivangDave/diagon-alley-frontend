@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Menu, Dropdown, Image, Icon, Label } from 'semantic-ui-react'
 
-const Header = () => {
+const Header = ({ setLoginView }) => {
   const [activeItem, handleItemClick] = useState('')
 
   return (
@@ -49,13 +49,19 @@ const Header = () => {
           >
             <Icon name={'cart'} />
             <Label color='black' floating>
-              0
+              {
+                localStorage.getItem('items_in_cart_length')
+                ? localStorage.getItem('items_in_cart_length') : 0
+              }
             </Label>
           </Menu.Item>
           <Menu.Item
             name='Alohomora'
             active={activeItem === 'Alohomora'}
-            onClick={() => handleItemClick('Alohomora')}
+            onClick={() => {
+              handleItemClick('Alohomora')
+              setLoginView(true)
+            }}
           />
         </Menu.Menu>
 

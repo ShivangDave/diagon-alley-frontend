@@ -7,7 +7,7 @@ const API = 'http://localhost:3000/api/v1/items'
 
 const MainContainer = () => {
 
-  const [items,setItems] = useState([])
+  const [ items, setItems ] = useState([])
 
   useEffect(() => {
     fetch(API).then(res => res.json())
@@ -20,7 +20,9 @@ const MainContainer = () => {
 
       <Card.Group className="cards-group" centered itemsPerRow={4} stackable>
         {
-          items.map(item => <Item key={item.id} item={item} />)
+          items && (
+            items.map(item => <Item key={item.id} item={item} />)
+          )
         }
       </Card.Group>
     </>
