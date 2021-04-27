@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import { Menu, Dropdown, Image, Icon, Label } from 'semantic-ui-react'
+import { Menu, Dropdown, Image, Icon, Label } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 const Header = ({ setLoginView, itemCount }) => {
 
@@ -47,6 +48,8 @@ const Header = ({ setLoginView, itemCount }) => {
             name='Cart'
             active={activeItem === 'cart'}
             onClick={() => handleItemClick('cart')}
+            as={Link}
+            to={'/cart'}
           >
             <Icon name={'cart'} />
             <Label color='black' floating>
