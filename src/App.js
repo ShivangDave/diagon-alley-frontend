@@ -15,11 +15,12 @@ import MainContainer from './containers/MainContainer';
 const App = () => {
 
   const [ loginView, setLoginView ] = useState(false)
+  const [ itemCount, setItemCount ] = useState(localStorage.getItem('items_in_cart_length'))
 
   return (
     <div className="App">
       <Router>
-        <Header setLoginView={setLoginView} />
+        <Header setLoginView={setLoginView} itemCount={itemCount} />
         {
           loginView && (
             <Auth loginView setLoginView={setLoginView} />
@@ -27,7 +28,7 @@ const App = () => {
         }
         <Switch>
           <Route exact path='/' component={MainContainer} />
-          <Route path='/product/:productId' component={ItemPage} />
+          <Route path='/product/:productId' component={() => <ItemPage setItemCount={setItemCount} /> } />
 
           <Route>
             <>

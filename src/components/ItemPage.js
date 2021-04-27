@@ -3,10 +3,11 @@ import {
   useParams
 } from 'react-router-dom';
 import { Grid, Segment, Image, Header, Button, Icon } from 'semantic-ui-react';
+import { withRouter } from 'react-router';
 
 import PreviewModal from './PreviewModal'
 
-const ItemPage = () => {
+const ItemPage = ({ history, setItemCount }) => {
 
   const { productId } = useParams()
   const [ item, setItem ] = useState({})
@@ -30,14 +31,29 @@ const ItemPage = () => {
     setLoading(true)
     setAdded(true)
 
-    console.log(item)
-
-    setTimeout(() => {
+    fetch('http://localhost:3000/api/v1/carts',{
+      method: 'POST',
+      headers: {
+        'Content-Type':'application/json',
+        'Auth-Token':localStorage.getItem('token')
+      },
+      body: JSON.stringify({ cart: { id: item.id } })
+    }).then(res => {
       setLoading(false)
-      setTimeout(() => {
-        setAdded(false)
-      },2000)
-    },3000)
+      return res.json()
+    })
+    .then(data => {
+      localStorage.setItem('items_in_cart_length',data.length)
+      setItemCount(data.length)
+      setAdded(false)
+      history.push('/')
+    })
+
+    // setTimeout(() => {
+    //
+    //   setTimeout(() => {
+    //   },2000)
+    // },3000)
   }
 
   useEffect(() => {
@@ -120,4 +136,4 @@ const ItemPage = () => {
   )
 }
 
-export default ItemPage;
+export default withRouter(ItemPage);

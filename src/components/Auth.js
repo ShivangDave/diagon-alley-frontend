@@ -1,4 +1,4 @@
-import { Modal, Image, Icon, Grid, Form, Segment, Button, Divider } from 'semantic-ui-react';
+import { Modal, Grid, Form, Segment, Button, Divider } from 'semantic-ui-react';
 import { useState } from 'react';
 import { withRouter } from 'react-router';
 

@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Menu, Dropdown, Image, Icon, Label } from 'semantic-ui-react'
 
-const Header = ({ setLoginView }) => {
-  const [activeItem, handleItemClick] = useState('')
+const Header = ({ setLoginView, itemCount }) => {
+
+  const [ activeItem, handleItemClick ] = useState('')
 
   return (
     <>
@@ -50,8 +51,8 @@ const Header = ({ setLoginView }) => {
             <Icon name={'cart'} />
             <Label color='black' floating>
               {
-                localStorage.getItem('items_in_cart_length')
-                ? localStorage.getItem('items_in_cart_length') : 0
+                itemCount
+                ? itemCount : 0
               }
             </Label>
           </Menu.Item>
