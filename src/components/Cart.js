@@ -5,6 +5,20 @@ const Cart = () => {
 
   const [ items, setItems ] = useState([])
 
+  const removeFromCart = (item) => {
+    fetch(`http://localhost:3000/api/v1/carts/${item.id}`,{
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Auth-Token': localStorage.getItem('token')
+      }
+    }).then(res => res.json())
+    .then(_ => {
+      const filtered = items.filter(i => item.id !== i.id)
+      setItems(filtered)
+    })
+  }
+
   useEffect(() => {
     fetch('http://localhost:3000/api/v1/carts',{
       method: 'GET',
@@ -33,6 +47,7 @@ const Cart = () => {
 
       setItems(mappedItems)
     })
+    .catch(err => setItems([]))
   },[])
 
   return (
@@ -54,7 +69,7 @@ const Cart = () => {
                           {`Subtotal: $${(item.price * item.quantity).toFixed(2)}`}
                         </p>
                         <p>
-                          <Button fluid negative>
+                          <Button fluid negative onClick={() => removeFromCart(item)}>
                             Remove
                           </Button>
                         </p>
