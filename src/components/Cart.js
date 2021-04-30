@@ -19,6 +19,38 @@ const Cart = () => {
     })
   }
 
+  const handleItemQuantity = (item, what) => {
+    fetch(`http://localhost:3000/api/v1/carts/${item.id}`,{
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Auth-Token': localStorage.getItem('token')
+      },
+      body: JSON.stringify({ todo: what })
+    }).then(res => res.json())
+    .then(items => setItems(reduceForCart(items)))
+  }
+
+  const reduceForCart = (items) => {
+    return items.reduce((acc,item) =>
+    {
+      if(acc.filter(x => x.id === item.id).length > 0)
+      {
+        return acc.map(i => {
+          if(i.id === item.id){
+            return {
+              ...item, quantity: i.quantity + 1
+            }
+          }
+          return i
+        })
+      }
+      else{
+        return [ ...acc, { ...item, quantity: 1 } ]
+      }
+    },[])
+  }
+
   useEffect(() => {
     fetch('http://localhost:3000/api/v1/carts',{
       method: 'GET',
@@ -26,27 +58,7 @@ const Cart = () => {
         'Auth-Token': localStorage.getItem('token')
       }
     }).then(res => res.json())
-    .then(items => {
-      const mappedItems = items.reduce((acc,item) =>
-      {
-        if(acc.filter(x => x.id === item.id).length > 0)
-        {
-          return acc.map(i => {
-            if(i.id === item.id){
-              return {
-                ...item, quantity: i.quantity + 1
-              }
-            }
-            return i
-          })
-        }
-        else{
-          return [ ...acc, { ...item, quantity: 1 } ]
-        }
-      },[])
-
-      setItems(mappedItems)
-    })
+    .then(items => setItems(reduceForCart(items)))
     .catch(err => setItems([]))
   },[])
 
@@ -75,7 +87,15 @@ const Cart = () => {
                         </p>
                       </>
                     )}
-                    meta={`Quantity: ${item.quantity}`} verticalAlign='middle'
+                    meta={() => (
+
+                        <p>
+                          Quantity: {`${item.quantity}`}
+                          <Button icon='plus' size={'mini'} onClick={() => handleItemQuantity(item, 'add')} />
+                          <Button icon='minus' size={'mini'} onClick={() => handleItemQuantity(item, 'remove')} />
+                        </p>
+                      )
+                    } verticalAlign='middle'
                 />
               </>
             ))
