@@ -4,6 +4,7 @@ import { Item, Segment, Grid, Image, Button } from 'semantic-ui-react';
 const Cart = () => {
 
   const [ items, setItems ] = useState([])
+  const [ addresses, setAddresses ] = useState({})
 
   const removeFromCart = (item) => {
     fetch(`http://localhost:3000/api/v1/carts/${item.id}`,{
@@ -69,20 +70,23 @@ const Cart = () => {
         'Auth-Token': localStorage.getItem('token')
       }
     }).then(res => res.json())
-    .then(items => setItems(reduceForCart(items)))
+    .then(data => {
+      setItems(reduceForCart(data.items))
+      setAddresses(data.addresses[0])
+    })
     .catch(err => setItems([]))
   },[])
 
   return (
     <Grid stackable columns={2} className={'cart-item-container'}>
-      <Grid.Column width={10}>
+      <Grid.Column key={0} width={10}>
         <Item.Group>
           {
             items.map((item,index) => (
               <>
-                <Item key={index} image={item.item_images[0].img_url}
+                <Item image={item.item_images[0].img_url}
                   header={item.name}
-                    extra={() => (
+                    extra={(
                       <>
                         {`$${item.price}`}
                         <br />
@@ -98,21 +102,21 @@ const Cart = () => {
                         </p>
                       </>
                     )}
-                    meta={() => (
-
+                    meta={(
                         <p>
                           Quantity: {`${item.quantity}`}
                           <Button icon='plus' size={'mini'} onClick={() => handleItemQuantity(item, 'add')} />
                           <Button icon='minus' size={'mini'} onClick={() => handleItemQuantity(item, 'remove')} />
                         </p>
                       )
-                    } verticalAlign='middle'
+                    }
                 />
               </>
             ))
           }
         </Item.Group>
       </Grid.Column>
+
       <Grid.Column width={6}>
         <Segment>
           <p>
@@ -132,6 +136,7 @@ const Cart = () => {
           <Button positive fluid onClick={placeOrder}> Checkout </Button>
         </Segment>
       </Grid.Column>
+
     </Grid>
   )
 }
