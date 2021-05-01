@@ -31,6 +31,17 @@ const Cart = () => {
     .then(items => setItems(reduceForCart(items)))
   }
 
+  const placeOrder = () => {
+    fetch(`http://localhost:3000/api/v1/orders`,{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Auth-Token': localStorage.getItem('token')
+      }
+    }).then(res => res.json())
+    .then(console.log)
+  }
+
   const reduceForCart = (items) => {
     return items.reduce((acc,item) =>
     {
@@ -118,7 +129,7 @@ const Cart = () => {
               return acc + (item.price * item.quantity)
             },0).toFixed(2)}
           </p>
-          <Button positive fluid> Checkout </Button>
+          <Button positive fluid onClick={placeOrder}> Checkout </Button>
         </Segment>
       </Grid.Column>
     </Grid>
