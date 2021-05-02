@@ -1,5 +1,5 @@
 import './App.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -16,7 +16,19 @@ import MainContainer from './containers/MainContainer';
 const App = () => {
 
   const [ loginView, setLoginView ] = useState(false)
-  const [ itemCount, setItemCount ] = useState(localStorage.getItem('items_in_cart_length'))
+  const [ itemCount, setItemCount ] = useState(0)
+
+  useEffect(() => {
+    fetch('http://localhost:3000/api/v1/carts',{
+      method: 'GET',
+      headers: {
+        'Auth-Token': localStorage.getItem('token')
+      }
+    }).then(res => res.json())
+    .then(data => {
+      setItemCount(data.items.length)
+    }).catch(_ => setItemCount(0))
+  },[itemCount])
 
   return (
     <div className="App">
