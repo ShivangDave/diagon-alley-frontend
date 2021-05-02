@@ -120,6 +120,36 @@ const Cart = () => {
       <Grid.Column width={6}>
         <Segment>
           <p>
+            Shipping Address <br/>
+            <a> Edit </a>
+          </p>
+          <p>
+            { addresses.shipping && (
+              <p>
+                {addresses.shipping.street_address} <br />
+                {addresses.shipping.apartment_no} <br />
+                {addresses.shipping.city}, {addresses.shipping.state} {addresses.shipping.zip_code}
+              </p>
+            )}
+          </p>
+          <hr />
+          <p>
+            Billing Address <br/>
+            <a> Edit </a>
+          </p>
+          <p>
+            { addresses.billing && (
+              <p>
+                {addresses.billing.street_address} <br />
+                {addresses.billing.apartment_no} <br />
+                {addresses.billing.city}, {addresses.billing.state} {addresses.billing.zip_code}
+              </p>
+            )}
+          </p>
+        </Segment>
+
+        <Segment>
+          <p>
             Subtotal: ${items.reduce((acc,item) => {
               return acc + (item.price * item.quantity)
             },0).toFixed(2)}
