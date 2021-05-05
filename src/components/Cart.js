@@ -40,7 +40,13 @@ const Cart = () => {
         'Auth-Token': localStorage.getItem('token')
       }
     }).then(res => res.json())
-    .then(console.log)
+    .then(resp => {
+      if(resp.msg == "Order fulfilled."){
+        setItems([])
+      }else{
+        alert('Order failed..')
+      }
+    })
   }
 
   const reduceForCart = (items) => {
@@ -81,6 +87,11 @@ const Cart = () => {
     <Grid stackable columns={2} className={'cart-item-container'}>
       <Grid.Column key={0} width={10}>
         <Item.Group>
+          {
+            items.length < 1 && (
+              <h1> No Items in Cart! </h1>
+            )
+          }
           {
             items.map((item,index) => (
               <>
@@ -163,7 +174,9 @@ const Cart = () => {
               return acc + (item.price * item.quantity)
             },0).toFixed(2)}
           </p>
-          <Button positive fluid onClick={placeOrder}> Checkout </Button>
+          <Button positive fluid onClick={() => (
+            items.length > 0 ? placeOrder() : alert('No items in the cart.')
+          )}> Checkout </Button>
         </Segment>
       </Grid.Column>
 
