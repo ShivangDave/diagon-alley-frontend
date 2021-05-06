@@ -111,7 +111,7 @@
   width: 70%;
 }
 
-.item-image {
+.item-image , div.label > img {
   height: 50px;
   width: 50px;
   cursor: pointer;
@@ -203,4 +203,21 @@
 .cart-item-card .item .image, .cart-item-card .item img {
   height: 200px;
   width: 200px;
+}
+
+/* Order page CSS */
+.order-history {
+  display: flex;
+  flex-direction: column;
+
+  width: 70%;
+}
+
+.order-card-content {
+  text-align: left;
+}
+
+.order-image-container {
+  display: flex;
+  justify-content: center;
 }

@@ -11,6 +11,7 @@ import Header from './components/Header';
 import Auth from './components/Auth';
 import ItemPage from './components/ItemPage';
 import Cart from './components/Cart';
+import Order from './components/Order';
 import MainContainer from './containers/MainContainer';
 
 const App = () => {
@@ -43,6 +44,7 @@ const App = () => {
           <Route exact path='/' component={MainContainer} />
           <Route path='/product/:productId' component={() => <ItemPage setItemCount={setItemCount} /> } />
           <Route path='/cart' component={Cart} />
+          <Route exact path='/orders' component={Order} />
           <Route>
             <>
               <h1> Not Found </h1>
