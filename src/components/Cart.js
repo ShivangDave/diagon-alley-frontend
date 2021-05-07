@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Item, Segment, Grid, Image, Button } from 'semantic-ui-react';
+import { Item, Segment, Grid, Image, Button, Modal, Header } from 'semantic-ui-react';
 
 const Cart = () => {
 
@@ -132,7 +132,7 @@ const Cart = () => {
         <Segment>
           <p>
             Shipping Address <br/>
-            <a> Edit </a>
+            <a onClick={() => alert("")}> Edit </a>
           </p>
           <p>
             { addresses.shipping && (
@@ -146,7 +146,7 @@ const Cart = () => {
           <hr />
           <p>
             Billing Address <br/>
-            <a> Edit </a>
+            <a onClick={() => alert("")}> Edit </a>
           </p>
           <p>
             { addresses.billing && (
