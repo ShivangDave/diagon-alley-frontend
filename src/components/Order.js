@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Feed, Segment } from 'semantic-ui-react';
+import { Feed, Segment, Button } from 'semantic-ui-react';
 
 const Order = () => {
 
@@ -14,11 +14,23 @@ const Order = () => {
       }
     }).then(res => res.json())
     .then(ordersData => {
-        console.log(ordersData)
         setOrders(ordersData)
     })
 
   },[])
+
+  const deleteOrder = (order) => {
+    fetch(`http://localhost:3000/api/v1/orders/${order.id}`,{
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(res => res.json())
+    .then(orderObj => {
+      const updatedOrders = orders.filter(o => o.id !== orderObj.id)
+      setOrders(updatedOrders)
+    })
+  }
 
   return (
     <Feed className={'order-history'}>
@@ -47,12 +59,11 @@ const Order = () => {
                     )
                   }
                 </Feed.Event>
+                <Button onClick={() => deleteOrder(order)} negative> Cancel Order </Button>
               </Segment>
             )
           })
       }
-
-
     </Feed>
   )
 }
