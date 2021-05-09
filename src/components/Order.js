@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Feed, Segment } from 'semantic-ui-react';
+import { withRouter } from 'react-router';
+import { Feed, Segment, Button } from 'semantic-ui-react';
 
-const Order = () => {
+const Order = ({ history }) => {
 
   const [ orders, setOrders ] = useState([])
 
@@ -14,11 +15,23 @@ const Order = () => {
       }
     }).then(res => res.json())
     .then(ordersData => {
-        console.log(ordersData)
         setOrders(ordersData)
     })
 
   },[])
+
+  const deleteOrder = (order) => {
+    fetch(`http://localhost:3000/api/v1/orders/${order.id}`,{
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(res => res.json())
+    .then(orderObj => {
+      const updatedOrders = orders.filter(o => o.id !== orderObj.id)
+      setOrders(updatedOrders)
+    })
+  }
 
   return (
     <Feed className={'order-history'}>
@@ -32,7 +45,13 @@ const Order = () => {
                   {
                     order.items.length > 0 && (
                         <Feed.Content className={'order-card-content'}>
-                          <Feed.Date as={'h3'}> Placed on: { date.toLocaleString() } </Feed.Date>
+                          <Feed.Date as={'h3'}>
+                            Placed on: { date.toLocaleString() }
+                            <br />
+                            <a onClick={() => history.push(`/orders/${order.id}`)}>
+                              details
+                            </a>
+                          </Feed.Date>
                           <Feed.Summary>
                             { order.items[0].name } and More..
                           </Feed.Summary>
@@ -47,14 +66,13 @@ const Order = () => {
                     )
                   }
                 </Feed.Event>
+                <Button onClick={() => deleteOrder(order)} negative> Cancel Order </Button>
               </Segment>
             )
           })
       }
-
-
     </Feed>
   )
 }
 
-export default Order;
+export default withRouter(Order);

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Item, Segment, Grid, Image, Button } from 'semantic-ui-react';
+import { Item, Segment, Grid, Button } from 'semantic-ui-react';
 
 const Cart = () => {
 
@@ -41,7 +41,7 @@ const Cart = () => {
       }
     }).then(res => res.json())
     .then(resp => {
-      if(resp.msg == "Order fulfilled."){
+      if(resp.msg === "Order fulfilled."){
         setItems([])
       }else{
         alert('Order failed..')
@@ -132,7 +132,7 @@ const Cart = () => {
         <Segment>
           <p>
             Shipping Address <br/>
-            <a> Edit </a>
+            <a onClick={() => alert("")}> Edit </a>
           </p>
           <p>
             { addresses.shipping && (
@@ -146,7 +146,7 @@ const Cart = () => {
           <hr />
           <p>
             Billing Address <br/>
-            <a> Edit </a>
+            <a onClick={() => alert("")}> Edit </a>
           </p>
           <p>
             { addresses.billing && (
