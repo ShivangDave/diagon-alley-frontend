@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
+import { withRouter } from 'react-router';
 import { Feed, Segment, Button } from 'semantic-ui-react';
 
-const Order = () => {
+const Order = ({ history }) => {
 
   const [ orders, setOrders ] = useState([])
 
@@ -44,7 +45,12 @@ const Order = () => {
                   {
                     order.items.length > 0 && (
                         <Feed.Content className={'order-card-content'}>
-                          <Feed.Date as={'h3'}> Placed on: { date.toLocaleString() } </Feed.Date>
+                          <Feed.Date as={'h3'}>
+                            Placed on: { date.toLocaleString() }
+                            <a onClick={() => history.push('/cart')}>
+                              details
+                            </a>
+                          </Feed.Date>
                           <Feed.Summary>
                             { order.items[0].name } and More..
                           </Feed.Summary>
@@ -68,4 +74,4 @@ const Order = () => {
   )
 }
 
-export default Order;
+export default withRouter(Order);
