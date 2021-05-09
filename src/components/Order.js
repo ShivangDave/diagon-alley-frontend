@@ -47,7 +47,8 @@ const Order = ({ history }) => {
                         <Feed.Content className={'order-card-content'}>
                           <Feed.Date as={'h3'}>
                             Placed on: { date.toLocaleString() }
-                            <a onClick={() => history.push('/cart')}>
+                            <br />
+                            <a onClick={() => history.push(`/orders/${order.id}`)}>
                               details
                             </a>
                           </Feed.Date>

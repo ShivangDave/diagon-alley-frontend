@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Item, Segment, Grid, Image, Button, Modal, Header } from 'semantic-ui-react';
+import { Item, Segment, Grid, Button } from 'semantic-ui-react';
 
 const Cart = () => {
 
@@ -41,7 +41,7 @@ const Cart = () => {
       }
     }).then(res => res.json())
     .then(resp => {
-      if(resp.msg == "Order fulfilled."){
+      if(resp.msg === "Order fulfilled."){
         setItems([])
       }else{
         alert('Order failed..')
